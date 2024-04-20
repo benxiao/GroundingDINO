@@ -1,0 +1,20 @@
+services:
+  grounding-dino:
+    # build: .
+    image: groundingdino-grounding-dino:v1
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all  # or specific GPUs like "0,1"
+    ports:
+      - 8889:8888
+    volumes:
+      - weights:/opt/program/weights
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+              device_ids: ['0']  # List specific IDs of GPUs you want to use
+    
+volumes:
+  weights:
